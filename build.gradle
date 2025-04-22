@@ -35,6 +35,11 @@ dependencies {
 
     //Swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
+
+    // MQTT 클라이언트
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+    //dotenv
+    implementation 'io.github.cdimascio:dotenv-java:2.2.4'
 }
 
 tasks.named('test') {
