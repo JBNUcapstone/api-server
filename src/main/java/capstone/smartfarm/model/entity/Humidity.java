@@ -21,6 +21,11 @@ public class Humidity {
     @Column(nullable = false)
     private LocalDateTime measuredAt = LocalDateTime.now();
 
+    public Humidity() {}
+
+    public Humidity(float value) {
+        this.value = value;
+    }
     public void updateValue(float value) {
         this.value = value;
     }

@@ -21,6 +21,12 @@ public class SoilMoisture {
     @Column(nullable = false)
     private LocalDateTime measuredAt = LocalDateTime.now();
 
+    public SoilMoisture() {}
+
+    public SoilMoisture(float value) {
+        this.value = value;
+    }
+
     public void updateValue(float value) {
         this.value = value;
     }
