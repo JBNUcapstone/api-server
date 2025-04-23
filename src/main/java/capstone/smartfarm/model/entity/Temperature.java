@@ -21,6 +21,12 @@ public class Temperature {
     @Column(nullable = false)
     private LocalDateTime measuredAt = LocalDateTime.now();
 
+    public Temperature() {}
+
+    public Temperature(float value) {
+        this.value = value;
+    }
+
     public void updateValue(float value) {
         this.value = value;
     }
