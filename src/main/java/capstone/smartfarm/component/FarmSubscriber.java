@@ -39,34 +39,52 @@ public class FarmSubscriber {
     public void start() {
         try {
             String persistenceDir = "/mqttlogs";
-            MqttClient client = new MqttClient(BROKER_URL, CLIENT_ID, new MqttDefaultFilePersistence(persistenceDir)); //클라이언트 객체 생성
+            MqttClient client = new MqttClient(BROKER_URL, CLIENT_ID, new MqttDefaultFilePersistence(persistenceDir));
 
-            MqttConnectOptions options = new MqttConnectOptions(); //접속에 필요한 정보를 적을 option 객체 생성
-            options.setUserName(username); // HiveMQ 클라우드 콘솔에서 설정한 계정
+            MqttConnectOptions options = new MqttConnectOptions();
+            options.setUserName(username);
             options.setPassword(password.toCharArray());
 
-            client.connect(options); //해당 option을 통해 특정 broker 연결
+            client.connect(options);
             System.out.println("Hive MQ 에서 생성된 브로커에 연결 완료 client id: " + CLIENT_ID);
 
             client.subscribe("farm/humidity", (topic, message) -> {
-                String payload = new String(message.getPayload());// 클라이언트 전송
-                sseService.sendToClient("humidity","humidity_data",payload);// DB에 저장
-                humidityRepository.save(new Humidity(Float.parseFloat(payload)));
+                try {
+                    String payload = new String(message.getPayload());
+                    System.out.println(payload);
+                    humidityRepository.save(new Humidity(Float.parseFloat(payload)));
+                    //sseService.sendToClient("humidity", "humidity_data", payload);
+                } catch (Exception e) {
+                    System.err.println("farm/humidity 메시지 처리 중 오류: " + e.getMessage());
+                    e.printStackTrace();
+                }
             });
 
             client.subscribe("farm/soilMoisture", (topic, message) -> {
-                String payload = new String(message.getPayload());
-                sseService.sendToClient("soilMoisture","soilMoisture_data",payload);
-                soilMoistureRepository.save(new SoilMoisture(Float.parseFloat(payload)));
+                try {
+                    String payload = new String(message.getPayload());
+                    System.out.println(payload);
+                    soilMoistureRepository.save(new SoilMoisture(Float.parseFloat(payload)));
+                    //sseService.sendToClient("soilMoisture", "soilMoisture_data", payload);
+                } catch (Exception e) {
+                    System.err.println("farm/soilMoisture 메시지 처리 중 오류: " + e.getMessage());
+                    e.printStackTrace();
+                }
             });
 
             client.subscribe("farm/temperature", (topic, message) -> {
-                String payload = new String(message.getPayload());
-                sseService.sendToClient("temperature","temperature",payload);
-                temperatureRepository.save(new Temperature(Float.parseFloat(payload)));
+                try {
+                    String payload = new String(message.getPayload());
+                    System.out.println(payload);
+                    temperatureRepository.save(new Temperature(Float.parseFloat(payload)));
+                    //sseService.sendToClient("temperature", "temperature_data", payload);
+                } catch (Exception e) {
+                    System.err.println("farm/temperature 메시지 처리 중 오류: " + e.getMessage());
+                    e.printStackTrace();
+                }
             });
         } catch (MqttException e) {
-            System.err.println("연결실패" + e.getMessage());
+            System.err.println("MQTT 연결 실패: " + e.getMessage());
             e.printStackTrace();
         }
     }
