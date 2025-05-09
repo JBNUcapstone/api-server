@@ -52,6 +52,7 @@ eventSource.onerror = (error) => {
 - `sort` 생략 시 최신순(desc)
 
 응답
+```
 {
   "content": [
     {
@@ -70,7 +71,8 @@ eventSource.onerror = (error) => {
   "first": true,
   "last": false
 }
-
+```
+'''
 필드명	타입	설명
 content	Array<FarmResponse>	조회된 데이터 리스트
 totalPages	Integer	전체 페이지 수
@@ -79,3 +81,4 @@ size	Integer	요청된 페이지 크기
 number	Integer	현재 페이지 번호
 first	Boolean	현재 페이지가 첫 페이지인지 여부
 last	Boolean	현재 페이지가 마지막 페이지인지 여부
+'''
