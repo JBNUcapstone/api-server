@@ -53,7 +53,7 @@ public class FarmSubscriber {
                     String payload = new String(message.getPayload());
                     System.out.println(payload);
                     humidityRepository.save(new Humidity(Float.parseFloat(payload)));
-                    //sseService.sendToClient("humidity", "humidity_data", payload);
+                    sseService.sendToClient("humidity", "humidity_data", payload);
                 } catch (Exception e) {
                     System.err.println("farm/humidity 메시지 처리 중 오류: " + e.getMessage());
                     e.printStackTrace();
@@ -65,7 +65,7 @@ public class FarmSubscriber {
                     String payload = new String(message.getPayload());
                     System.out.println(payload);
                     soilMoistureRepository.save(new SoilMoisture(Float.parseFloat(payload)));
-                    //sseService.sendToClient("soilMoisture", "soilMoisture_data", payload);
+                    sseService.sendToClient("soilMoisture", "soilMoisture_data", payload);
                 } catch (Exception e) {
                     System.err.println("farm/soilMoisture 메시지 처리 중 오류: " + e.getMessage());
                     e.printStackTrace();
@@ -77,7 +77,7 @@ public class FarmSubscriber {
                     String payload = new String(message.getPayload());
                     System.out.println(payload);
                     temperatureRepository.save(new Temperature(Float.parseFloat(payload)));
-                    //sseService.sendToClient("temperature", "temperature_data", payload);
+                    sseService.sendToClient("temperature", "temperature_data", payload);
                 } catch (Exception e) {
                     System.err.println("farm/temperature 메시지 처리 중 오류: " + e.getMessage());
                     e.printStackTrace();

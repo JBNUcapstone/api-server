@@ -21,4 +21,16 @@ public class FarmController {
         Page<FarmResponse> farmResponses = farmService.selectHumidity(request);
         return farmResponses;
     }
+
+    @PostMapping("/farm/soil")
+    @Operation(description = "토양 습도 조회 API (startTime, endTime 생략시 전체)")
+    public Page<FarmResponse> getSoilMoisture(@RequestBody FarmRequest request) {
+        return farmService.selectSoilMoisture(request);
+    }
+
+    @PostMapping("/farm/temperature")
+    @Operation(description = "온도 조회 API (startTime, endTime 생략시 전체)")
+    public Page<FarmResponse> getTemperature(@RequestBody FarmRequest request) {
+        return farmService.selectTemperature(request);
+    }
 }
